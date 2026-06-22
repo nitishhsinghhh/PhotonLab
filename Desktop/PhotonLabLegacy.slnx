@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="../Tests/PhotonLab.DesktopIntegrationTests/PhotonLab.DesktopIntegrationTests.csproj" />
+  <Project Path="PhotonLab.Core/PhotonLab.Core.csproj" />
+  <Project Path="PhotonLab.Desktop/PhotonLab.Desktop.csproj" />
+</Solution>

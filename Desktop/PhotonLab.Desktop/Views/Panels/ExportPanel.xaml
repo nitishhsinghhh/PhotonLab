@@ -1,0 +1,28 @@
+<UserControl x:Class="PhotonLab.Desktop.Views.Panels.ExportPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <GroupBox Header="Export"
+              Margin="5">
+
+        <StackPanel Margin="10">
+
+            <Button Height="35"
+                    Content="Export TIFF"
+                    Command="{Binding ExportTiffCommand}"/>
+
+            <Button Height="35"
+                    Margin="0,10,0,0"
+                    Content="Export PNG"
+                    Command="{Binding ExportPngCommand}"/>
+
+            <Button Height="35"
+                    Margin="0,10,0,0"
+                    Content="Export JPEG"
+                    Command="{Binding ExportJpegCommand}"/>
+
+        </StackPanel>
+
+    </GroupBox>
+
+</UserControl>

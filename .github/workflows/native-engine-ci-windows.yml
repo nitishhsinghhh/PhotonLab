@@ -1,0 +1,256 @@
+#*********************************************************************/
+# SYSTEM      : PhotonLab Infrastructure                             */
+# SUBSYSTEM   : Cross-Platform Native C++ Engine                     */
+# COMPONENT   : cross-platform-cli-validation                        */
+# VERSION     : 1.1                                                  */
+#                                                                    */
+# DESCRIPTION : Validates the Core C++17 engine and CLI local app    */
+#               across Linux, Windows, and macOS environments.       */
+#               Enforces ABI compatibility and path integrity for    */
+#               the capitalized nested layout folder.                */
+# REVISION HISTORY:                                                  */
+# ------------------------------------------------------------------ */
+# Ver  Date        Author        Description                         */
+# ---  ----------  --------------  --------------------------------- */
+# 1.0  2026-06-10  Nitish Singh    Initial Implementation            */
+#*********************************************************************/
+
+name: PhotonLab Desktop CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build-native-and-desktop:
+
+    runs-on: windows-latest
+
+    env:
+      BUILD_CONFIGURATION: Release
+
+    steps:
+
+    #################################################################
+    # Checkout
+    #################################################################
+
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    #################################################################
+    # Toolchains
+    #################################################################
+
+    - name: Setup .NET 8
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Setup MSVC
+      uses: ilammy/msvc-dev-cmd@v1
+
+    #################################################################
+    # Native C++ Build
+    #################################################################
+
+    - name: Clean Native Build
+      shell: pwsh
+      working-directory: Native/PhotonLab.Native
+      run: |
+        if (Test-Path build) {
+          Remove-Item build -Recurse -Force
+        }
+    
+    - name: Setup Ninja
+      uses: seanmiddleditch/gha-setup-ninja@v5
+  
+    - name: Configure Native Engine
+      shell: pwsh
+      working-directory: Native/PhotonLab.Native
+      run: |
+        cmake -S . `
+        -B build `
+        -DCMAKE_BUILD_TYPE=Release
+
+    - name: Build Native Engine
+      shell: pwsh
+      working-directory: Native/PhotonLab.Native
+      run: |
+        cmake --build build `
+          --config Release `
+          --parallel
+
+    #################################################################
+    # Debug Native Outputs
+    #################################################################
+
+    - name: Display Native Outputs
+      shell: pwsh
+      working-directory: Native/PhotonLab.Native
+      run: |
+        Get-ChildItem build -Recurse `
+          -Include *.dll,*.lib,*.exe |
+          Select FullName
+
+    #################################################################
+    # Run Native Tests
+    #################################################################
+
+    - name: Run Native Tests
+      shell: pwsh
+      working-directory: Native/PhotonLab.Native
+      run: |
+        ctest `
+          --test-dir build `
+          -C Release `
+          --output-on-failure `
+          --verbose
+
+    #################################################################
+    # Locate Native DLL
+    #################################################################
+
+    - name: Locate Native DLL
+      id: native_dll
+      shell: pwsh
+      run: |
+
+        $dll = Get-ChildItem `
+          -Path Native/PhotonLab.Native/build `
+          -Recurse `
+          -Filter "*.dll" |
+          Where-Object {
+            $_.Name -notmatch "gtest|gmock"
+          } |
+          Select-Object -First 1
+
+        if (-not $dll) {
+          throw "PhotonLab native DLL not found."
+        }
+
+        Write-Host "Found DLL:"
+        Write-Host $dll.FullName
+
+        echo "DLL_PATH=$($dll.FullName)" >> $env:GITHUB_ENV
+
+    #################################################################
+    # Restore .NET Solution
+    #################################################################
+
+    - name: Restore Desktop
+      run: |
+        dotnet restore Desktop/PhotonLab.Core/PhotonLab.Core.csproj
+        dotnet restore Desktop/PhotonLab.Desktop/PhotonLab.Desktop.csproj
+        dotnet restore Tests/PhotonLab.DesktopIntegrationTests/PhotonLab.DesktopIntegrationTests.csproj
+
+    - name: Build Desktop
+      run: |
+        dotnet build Desktop/PhotonLab.Desktop/PhotonLab.Desktop.csproj `
+        -c Release `
+        --no-restore
+
+    #################################################################
+    # Copy Native DLL To Integration Tests
+    #################################################################
+
+    - name: Copy Native DLL
+      shell: pwsh
+      run: |
+
+        $outputFolder =
+          "Tests/PhotonLab.DesktopIntegrationTests/bin/Release/net8.0"
+
+        New-Item `
+          -ItemType Directory `
+          -Force `
+          -Path $outputFolder
+
+        Copy-Item `
+          $env:DLL_PATH `
+          $outputFolder `
+          -Force
+
+        Write-Host "DLL copied to:"
+        Write-Host $outputFolder
+
+    #################################################################
+    # Run Desktop Integration Tests
+    #################################################################
+
+    - name: Build Integration Tests
+      run: |
+        dotnet build `
+        Tests/PhotonLab.DesktopIntegrationTests/PhotonLab.DesktopIntegrationTests.csproj `
+        -c Release `
+        --no-restore
+
+    - name: Run Desktop Integration Tests
+      working-directory: Tests/PhotonLab.DesktopIntegrationTests
+      run: |
+        dotnet test `
+        -c Release `
+        --no-build `
+        --logger trx
+
+    #################################################################
+    # Upload Native Logs
+    #################################################################
+
+    - name: Upload Native Test Logs
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: Native-TestLogs
+        path: |
+          Native/PhotonLab.Native/build/Testing
+        if-no-files-found: ignore
+
+    #################################################################
+    # Upload TRX Results
+    #################################################################
+
+    - name: Upload DotNet Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: DotNet-TestResults
+        path: |
+          **/*.trx
+        if-no-files-found: ignore
+
+    #################################################################
+    # Upload Native Binaries
+    #################################################################
+
+    - name: Upload Native Artifacts
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: PhotonLab-Native-Binaries
+        path: |
+          Native/PhotonLab.Native/build/**/*.dll
+          Native/PhotonLab.Native/build/**/*.lib
+          Native/PhotonLab.Native/build/**/*.exe
+        if-no-files-found: ignore
+
+
+    #################################################################
+    # Upload Desktop Application
+    #################################################################
+
+    - name: Upload Desktop Application
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: PhotonLab-Desktop-Release
+        path: |
+            Desktop/PhotonLab.Desktop/bin/**/*.exe
+            Desktop/PhotonLab.Desktop/bin/**/*.dll
+            Desktop/PhotonLab.Desktop/bin/**/*.json
+            Desktop/PhotonLab.Desktop/bin/**/*.runtimeconfig.json
+            Desktop/PhotonLab.Desktop/bin/**/*.deps.json
+        if-no-files-found: warn

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>PhotonLab About</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: #0e0e10;
+        color: #eaeaea;
+    }
+
+    /* Header */
+    .header {
+        padding: 28px;
+        background: linear-gradient(135deg, #1b1f2a, #121212);
+        border-bottom: 1px solid #2a2a2a;
+    }
+
+    .title {
+        font-size: 30px;
+        font-weight: 600;
+        color: #4FC3F7;
+        letter-spacing: 0.5px;
+    }
+
+    .subtitle {
+        margin-top: 6px;
+        font-size: 14px;
+        opacity: 0.75;
+    }
+
+    /* Layout */
+    .container {
+        padding: 20px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    /* Cards */
+    .card {
+        background: #151518;
+        border: 1px solid #262626;
+        border-radius: 12px;
+        padding: 16px;
+        transition: 0.2s ease;
+    }
+
+    .card:hover {
+        border-color: #3a3a3a;
+        transform: translateY(-1px);
+    }
+
+    h2 {
+        font-size: 15px;
+        margin: 0 0 8px 0;
+        color: #4FC3F7;
+    }
+
+    p {
+        font-size: 13px;
+        line-height: 1.6;
+        opacity: 0.9;
+    }
+
+    /* Feature badges */
+    .tag {
+        display: inline-block;
+        padding: 3px 8px;
+        margin: 2px;
+        font-size: 11px;
+        background: #222;
+        border-radius: 6px;
+        border: 1px solid #333;
+    }
+
+    /* Footer */
+    .footer {
+        margin-top: 20px;
+        padding: 14px;
+        font-size: 12px;
+        opacity: 0.6;
+        text-align: center;
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <div class="title">PhotonLab</div>
+    <div class="subtitle">Advanced Image Processing Workstation (WPF + Native Engine)</div>
+</div>
+
+<div class="container">
+
+    <!-- OVERVIEW -->
+    <div class="card">
+        <h2>Overview</h2>
+        <p>
+            PhotonLab is a high-performance image processing application designed for scientific and
+            analytical workflows. It supports multi-format image handling, real-time processing, and
+            advanced visualization tools such as histogram analysis and pixel-level inspection.
+        </p>
+    </div>
+
+    <!-- OPEN -->
+    <div class="card">
+        <h2>Open Image</h2>
+        <p>
+            The Open feature allows you to load image files (TIFF, PNG, JPEG) into the workspace.
+            Once loaded, the image is rendered in the central viewer with support for zooming,
+            panning, and pixel-level inspection.
+        </p>
+        <span class="tag">File Import</span>
+        <span class="tag">TIFF Support</span>
+        <span class="tag">Viewer Load</span>
+    </div>
+
+    <!-- EXPORT -->
+    <div class="card">
+        <h2>Export</h2>
+        <p>
+            Export allows saving the processed image into multiple formats such as PNG, JPEG, and TIFF.
+            This ensures compatibility for both scientific archiving and general-purpose usage.
+            Export preserves image quality and applied processing filters.
+        </p>
+        <span class="tag">PNG</span>
+        <span class="tag">JPEG</span>
+        <span class="tag">TIFF</span>
+    </div>
+
+    <!-- GAMMA -->
+    <div class="card">
+        <h2>Apply Gamma Correction</h2>
+        <p>
+            Gamma correction adjusts the luminance of the image to improve visual perception.
+            It enhances brightness or darkens image regions without losing structural details.
+            This is useful for correcting exposure imbalance and improving contrast visibility.
+        </p>
+        <span class="tag">Brightness Control</span>
+        <span class="tag">Contrast Tuning</span>
+        <span class="tag">Non-linear Mapping</span>
+    </div>
+
+    <!-- MEDIAN -->
+    <div class="card">
+        <h2>Median Filter</h2>
+        <p>
+            The median filter reduces noise in images while preserving edges.
+            It replaces each pixel value with the median of neighboring pixels,
+            making it ideal for removing salt-and-pepper noise.
+        </p>
+        <span class="tag">Noise Reduction</span>
+        <span class="tag">Edge Preserving</span>
+    </div>
+
+    <!-- SHARPEN -->
+    <div class="card">
+        <h2>Sharpen Filter</h2>
+        <p>
+            The sharpen filter enhances edges and fine details in an image by increasing contrast
+            between adjacent pixels. It improves clarity and visual definition of structures.
+        </p>
+        <span class="tag">Edge Enhancement</span>
+        <span class="tag">Detail Boost</span>
+    </div>
+
+    <!-- HISTOGRAM -->
+    <div class="card">
+        <h2>Histogram Analysis</h2>
+        <p>
+            The histogram panel provides a graphical representation of pixel intensity distribution.
+            It helps analyze exposure, contrast, and dynamic range of the image.
+        </p>
+        <span class="tag">Intensity Graph</span>
+        <span class="tag">Image Statistics</span>
+    </div>
+
+    <!-- CREDITS -->
+    <div class="card">
+        <h2>System</h2>
+        <p>
+            Built using WPF (UI Layer) and a high-performance native processing engine.
+            Designed for extensibility, performance, and scientific accuracy.
+        </p>
+    </div>
+
+</div>
+
+<div class="footer">
+    © 2026 PhotonLab • All Rights Reserved
+</div>
+
+</body>
+</html>

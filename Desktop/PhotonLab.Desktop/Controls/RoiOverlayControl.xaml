@@ -1,0 +1,16 @@
+<UserControl x:Class="PhotonLab.Desktop.Controls.RoiOverlayControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Canvas Background="Transparent">
+
+        <Rectangle Width="{Binding Width}"
+                   Height="{Binding Height}"
+                   Stroke="Lime"
+                   StrokeThickness="2"
+                   Canvas.Left="{Binding X}"
+                   Canvas.Top="{Binding Y}" />
+
+    </Canvas>
+
+</UserControl>

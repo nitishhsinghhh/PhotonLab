@@ -1,0 +1,229 @@
+<Window x:Class="PhotonLab.Desktop.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:PhotonLab.Desktop.Controls"
+        xmlns:panels="clr-namespace:PhotonLab.Desktop.Views.Panels"
+        Title="PhotonLab"
+        Height="1000"
+        Width="1800"
+        WindowStartupLocation="CenterScreen">
+
+    <DockPanel DockPanel.Dock="Top" Background="#121212">
+
+        <!-- Menu -->
+
+        <Menu DockPanel.Dock="Top">
+
+            <MenuItem Header="_File">
+
+                <MenuItem Header="Open TIFF"
+                          Command="{Binding OpenImageCommand}" />
+
+                <Separator/>
+
+                    <MenuItem Header="Export">
+                        <MenuItem Header="PNG"
+                            Command="{Binding ExportPngCommand}" />
+                        <MenuItem Header="JPEG"
+                            Command="{Binding ExportJpegCommand}" />
+                        <MenuItem Header="TIFF"
+                              Command="{Binding ExportTiffCommand}" />
+                    </MenuItem>
+                
+                <Separator/>
+
+                <MenuItem Header="Exit"
+                          Command="{Binding ExitCommand}" />
+
+            </MenuItem>
+
+            <MenuItem Header="_View">
+
+                <MenuItem Header="Reset Zoom"
+                          Command="{Binding ResetZoomCommand}" />
+
+                <MenuItem Header="Fit To Screen"
+                          Command="{Binding FitToScreenCommand}" />
+
+            </MenuItem>
+
+            <MenuItem Header="_Processing">
+
+                <MenuItem Header="Gamma Correction"
+                          Command="{Binding ApplyGammaCommand}" />
+
+                <MenuItem Header="Median Filter"
+                          Command="{Binding ApplyMedianCommand}" />
+
+                <MenuItem Header="Sharpen Filter"
+                          Command="{Binding ApplySharpenCommand}" />
+
+            </MenuItem>
+
+            <MenuItem Header="_Help">
+
+                <MenuItem Header="About"
+                          Command="{Binding ShowAboutDialogCommand}" />
+
+            </MenuItem>
+
+        </Menu>
+
+        <!-- Toolbar -->
+
+        <ToolBarTray DockPanel.Dock="Top">
+
+            <ToolBar>
+
+                <Button Content="Open"
+                        Command="{Binding OpenImageCommand}" />
+
+                <Separator/>
+
+                <Button Content="Gamma"
+                        Command="{Binding ApplyGammaCommand}" />
+
+                <Button Content="Median"
+                        Command="{Binding ApplyMedianCommand}" />
+
+                <Button Content="Sharpen"
+                        Command="{Binding ApplySharpenCommand}" />
+
+                <Separator/>
+
+                <Button Content="Export"
+                        Command="{Binding ExportCommand}" />
+
+                <Separator/>
+
+                <Button Content="Histogram"
+                        Command="{Binding RefreshHistogramCommand}" />
+
+            </ToolBar>
+
+        </ToolBarTray>
+
+        <!-- Status Bar -->
+
+        <StatusBar DockPanel.Dock="Bottom">
+
+
+            <StatusBarItem>
+                <TextBlock Text="TEST STATUS BAR" />
+            </StatusBarItem>
+
+            <Separator/>
+
+            <StatusBarItem>
+                <TextBlock Text="{Binding ImageDimensions}" />
+            </StatusBarItem>
+
+            <Separator/>
+
+            <StatusBarItem>
+                <TextBlock Text="{Binding BitDepth}" />
+            </StatusBarItem>
+
+            <Separator/>
+
+            <StatusBarItem>
+                <TextBlock Text="{Binding ZoomPercentage}" />
+            </StatusBarItem>
+
+            <Separator/>
+
+            <StatusBarItem>
+                <TextBlock Text="{Binding CursorPosition}" />
+            </StatusBarItem>
+
+            <Separator/>
+
+            <StatusBarItem>
+                <TextBlock Text="{Binding PixelValue}" />
+            </StatusBarItem>
+
+            <Separator/>
+
+            <StatusBarItem>
+                <TextBlock Text="{Binding StatusMessage}" />
+            </StatusBarItem>
+
+
+        </StatusBar>
+
+        <!-- Main Workspace -->
+
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="350"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="250"/>
+            </Grid.RowDefinitions>
+
+            <!-- LEFT SIDEBAR -->
+
+            <TabControl Grid.Column="0"
+                        Margin="5">
+
+                <TabItem Header="Metadata">
+                    <panels:MetadataPanel/>
+                </TabItem>
+
+                <TabItem Header="Statistics">
+                    <panels:StatisticsPanel/>
+                </TabItem>
+
+            </TabControl>
+
+            <!-- IMAGE VIEWER -->
+
+            <Border Grid.Column="1"
+                Margin="5"
+                Background="#101010"
+                BorderBrush="#404040"
+                BorderThickness="1"
+                SizeChanged="OnViewerSizeChanged">
+
+                        <controls:ImageViewerControl
+                x:Name="ImageViewer"/>
+
+            </Border>
+
+            <!-- RIGHT SIDEBAR -->
+
+            <TabControl Grid.Column="2"
+                        Margin="5">
+
+                <TabItem Header="Processing">
+                    <panels:ProcessingPanel/>
+                </TabItem>
+
+                <TabItem Header="Export">
+                    <panels:ExportPanel/>
+                </TabItem>
+
+            </TabControl>
+
+            <!-- HISTOGRAM -->
+
+            <Border Grid.Row="1"
+                    Grid.ColumnSpan="3"
+                    Margin="5"
+                    BorderBrush="#404040"
+                    BorderThickness="1">
+
+                <panels:HistogramPanel DataContext="{Binding}" />
+
+            </Border>
+
+        </Grid>
+
+    </DockPanel>
+
+</Window>

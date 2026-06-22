@@ -1,0 +1,75 @@
+<Window x:Class="PhotonLab.Desktop.Views.Dialogs.ExportDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Export Image"
+        Height="500"
+        Width="700"
+        WindowStartupLocation="CenterOwner">
+
+    <Grid Margin="15">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+
+            <TextBlock Text="Export Format"/>
+
+            <ComboBox Margin="0,5,0,15">
+
+                <ComboBoxItem Content="TIFF"/>
+                <ComboBoxItem Content="PNG"/>
+                <ComboBoxItem Content="JPEG"/>
+
+            </ComboBox>
+
+            <TextBlock Text="Destination"/>
+
+            <DockPanel Margin="0,5,0,15">
+
+                <TextBox Width="500"/>
+
+                <Button Content="Browse"
+                        Width="100"
+                        Margin="10,0,0,0"/>
+
+            </DockPanel>
+
+            <GroupBox Header="Options">
+
+                <StackPanel Margin="10">
+
+                    <CheckBox Content="Export Current View"/>
+
+                    <CheckBox Content="Export Processed Image"/>
+
+                    <CheckBox Content="Export ROI Only"/>
+
+                    <CheckBox Content="Include Metadata"/>
+
+                </StackPanel>
+
+            </GroupBox>
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+
+            <Button Width="120"
+                    Margin="5"
+                    Content="Export"/>
+
+            <Button Width="120"
+                    Margin="5"
+                    Content="Cancel"
+                    IsCancel="True"/>
+
+        </StackPanel>
+
+    </Grid>
+
+</Window>

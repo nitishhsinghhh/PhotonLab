@@ -1,0 +1,85 @@
+<UserControl x:Class="PhotonLab.Desktop.Views.Panels.ProcessingPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ScrollViewer>
+
+        <StackPanel Margin="10">
+
+            <GroupBox Header="Window / Level">
+
+                <StackPanel Margin="10">
+
+                    <TextBlock Text="Window Width"/>
+
+                    <Slider Minimum="1"
+                        Maximum="65535"
+                        Value="{Binding WindowWidth}"
+                        TickFrequency="1000"/>
+
+                    <TextBlock Text="{Binding WindowWidth}"/>
+
+                    <TextBlock Margin="0,10,0,0"
+                           Text="Window Level"/>
+
+                     <Slider Minimum="0"
+                        Maximum="65535"
+                        Value="{Binding WindowLevel}"
+                        TickFrequency="1000"/>
+
+                    <TextBlock Text="{Binding WindowLevel}"/>
+
+                    <Button Content="Apply Window/Level"
+                        Command="{Binding ApplyWindowLevelCommand}"
+                        Margin="0,10,0,0"/>
+
+                </StackPanel>
+
+            </GroupBox>
+
+            <GroupBox Header="Gamma"
+                      Margin="0,10,0,0">
+
+                <StackPanel Margin="10">
+                    <TextBlock Text="{Binding Gamma}" />
+                    <Slider Minimum="0.1"
+                            Maximum="5.0"
+                            Value="{Binding Gamma}"/>
+
+                    <Button Margin="0,10,0,0"
+                            Content="Apply Gamma"
+                            Command="{Binding ApplyGammaCommand}"/>
+
+                </StackPanel>
+
+            </GroupBox>
+
+            <GroupBox Header="Median Filter"
+                      Margin="0,10,0,0">
+
+                <StackPanel Margin="10">
+
+                    <Button Content="Apply Median Filter"
+                            Command="{Binding ApplyMedianCommand}"/>
+
+                </StackPanel>
+
+            </GroupBox>
+
+            <GroupBox Header="Sharpen"
+                      Margin="0,10,0,0">
+
+                <StackPanel Margin="10">
+
+                    <Button Content="Apply Sharpen"
+                            Command="{Binding ApplySharpenCommand}"/>
+
+                </StackPanel>
+
+            </GroupBox>
+
+        </StackPanel>
+
+    </ScrollViewer>
+
+</UserControl>

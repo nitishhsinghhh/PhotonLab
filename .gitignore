@@ -1,0 +1,118 @@
+#*********************************************************************/
+# SYSTEM        : PhotonLab Imaging Platform                         */
+# COMPONENT     : Repository Configuration (.gitignore)              */
+# DESCRIPTION   : Git ignore patterns to exclude build artifacts,    */
+#                 IDE metadata, and sensitive environment data.      */
+# AUTHOR        : Nitish Singh                                       */
+#*********************************************************************/
+
+#----------------------------------------------------------------------
+# 1. IDE & Editor Metadata
+#----------------------------------------------------------------------
+
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.swp
+*.swo
+
+#----------------------------------------------------------------------
+# 2. Build Artifacts & Output Directories
+#----------------------------------------------------------------------
+
+bin/
+obj/
+x64/
+x86/
+Debug/
+Release/
+build/
+out/
+build-*/
+
+#----------------------------------------------------------------------
+# 3. Platform-Specific Build Systems
+#----------------------------------------------------------------------
+
+# C++/Native (CMake)
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+
+# C#/.NET (MSBuild/NuGet)
+*.csproj.user
+packages/
+*.nupkg
+project.lock.json
+project.assets.json
+*.nuget.props
+*.nuget.targets
+
+#----------------------------------------------------------------------
+# 4. Language-Specific Compiler/Linker Output
+#----------------------------------------------------------------------
+
+*.pdb
+*.ilk
+*.exp
+*.lib
+*.log
+*.log.*
+*.dmp
+
+#----------------------------------------------------------------------
+# 5. Project Documentation
+#----------------------------------------------------------------------
+
+Docs/Requirements/Requirement.pdf
+
+#----------------------------------------------------------------------
+# 6. Operating System & Environment
+#----------------------------------------------------------------------
+
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+#----------------------------------------------------------------------
+# 7. Testing & Coverage
+#----------------------------------------------------------------------
+
+TestResults/
+*.coverage
+*.coveragexml
+
+#----------------------------------------------------------------------
+# 8. Security, Secrets & Deployment
+#----------------------------------------------------------------------
+
+# Prevent accidental committing of sensitive keys/passwords
+*.pem
+*.key
+*.pub
+*.env
+*.local
+secrets.json
+
+# Ignore compressed archives and installers
+*.zip
+*.tar.gz
+*.msi
+*.exe
+*.dll
+
+#----------------------------------------------------------------------
+# 9. Local Tooling & Dependency Management
+#----------------------------------------------------------------------
+
+node_modules/
+dist/
+venv/
+__pycache__/
+*.pyc

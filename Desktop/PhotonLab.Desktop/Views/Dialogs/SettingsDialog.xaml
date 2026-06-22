@@ -1,0 +1,80 @@
+<Window x:Class="PhotonLab.Desktop.Views.Dialogs.SettingsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Settings"
+        Height="600"
+        Width="800"
+        WindowStartupLocation="CenterOwner">
+
+    <Grid Margin="15">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TabControl>
+
+            <TabItem Header="General">
+
+                <StackPanel Margin="15">
+
+                    <CheckBox Content="Load last session on startup"/>
+
+                    <CheckBox Content="Enable auto save"/>
+
+                </StackPanel>
+
+            </TabItem>
+
+            <TabItem Header="Rendering">
+
+                <StackPanel Margin="15">
+
+                    <TextBlock Text="Default Zoom"/>
+
+                    <ComboBox>
+                        <ComboBoxItem Content="Fit"/>
+                        <ComboBoxItem Content="100%"/>
+                        <ComboBoxItem Content="200%"/>
+                    </ComboBox>
+
+                    <CheckBox Margin="0,15,0,0"
+                              Content="Use hardware acceleration"/>
+
+                </StackPanel>
+
+            </TabItem>
+
+            <TabItem Header="Processing">
+
+                <StackPanel Margin="15">
+
+                    <CheckBox Content="Enable SIMD Processing"/>
+
+                    <CheckBox Content="Enable Multithreading"/>
+
+                </StackPanel>
+
+            </TabItem>
+
+        </TabControl>
+
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+
+            <Button Width="100"
+                    Margin="5"
+                    Content="Save"/>
+
+            <Button Width="100"
+                    Margin="5"
+                    Content="Cancel"
+                    IsCancel="True"/>
+
+        </StackPanel>
+
+    </Grid>
+
+</Window>

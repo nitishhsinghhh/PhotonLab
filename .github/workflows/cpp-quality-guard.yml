@@ -1,0 +1,124 @@
+#*********************************************************************/
+# SYSTEM      : PhotonLab Infrastructure                             */
+# SUBSYSTEM   : Native Engine Code Quality                           */
+# COMPONENT   : static-analysis-pipeline                             */
+# VERSION     : 1.8                                                  */
+#                                                                    */
+# DESCRIPTION : Enforces C++17 standards, formatting, and safety     */
+#               using the LLVM 16 toolchain. Optimized for the       */
+#               nested Native/PhotonLab.Native directory layout with */
+#               strict case-exact path validation (Src/Include).     */
+#                                                                    */
+# SIDE EFFECTS: Fails the build on any style deviation or detected   */
+#               memory safety issues (warnings-as-errors).           */
+#                                                                    */
+# LICENSE     : Apache License, Version 2.0                          */
+#               Licensed under the Apache License, Version 2.0.      */
+#               You may obtain a copy of the License at              */
+#               http://www.apache.org/licenses/LICENSE-2.0           */
+#                                                                    */
+# AUTHOR      : Nitish Singh (nitishhsinghhh)                        */
+# CONTACT     : me.singhnitish@yandex.com                            */
+#                                                                    */
+# REVISION HISTORY:                                                  */
+# ------------------------------------------------------------------ */
+# Ver  Date        Author        Description                         */
+# ---  ----------  --------------  --------------------------------- */
+# 1.0  2026-06-10  Nitish Singh    Initial Implementation            */
+# 1.1  2026-06-10  Nitish Singh    Fixed nested workspace path       */
+# 1.2  2026-06-10  Nitish Singh    Aligned case-exact paths- Linux   */
+#*********************************************************************/
+
+name: C++ Quality Guard
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - 'Native/PhotonLab.Native/src/**'
+      - 'Native/PhotonLab.Native/include/**'
+      - 'Native/PhotonLab.Native/CMakeLists.txt'
+      - '.github/workflows/cpp-quality-guard.yml'
+  pull_request:
+    branches: ["main"]
+    paths:
+      - 'Native/PhotonLab.Native/src/**'
+      - 'Native/PhotonLab.Native/include/**'
+      - 'Native/PhotonLab.Native/CMakeLists.txt'
+      - '.github/workflows/cpp-quality-guard.yml'
+  workflow_dispatch:
+
+jobs:
+  static-analysis:
+    name: Static Analysis
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Native/PhotonLab.Native
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            clang-format \
+            clang-tidy \
+            cmake \
+            build-essential \
+            jq
+
+      - name: Configure Project
+        run: |
+          cmake -S . \
+            -B build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+      - name: Verify Formatting
+        run: |
+          find src include \
+            -type f \
+            \( -name "*.cpp" -o -name "*.hpp" -o -name "*.h" \) \
+            -print0 | \
+            xargs -0 clang-format --dry-run --Werror
+
+      - name: Run Clang-Tidy
+        run: |
+          find src \
+            -type f \
+            -name "*.cpp" \
+            -print0 | \
+            xargs -0 clang-tidy \
+            -p build \
+            --warnings-as-errors='*' \
+            --header-filter='.*'
+
+      - name: Build Validation
+        run: |
+          cmake --build build --config Release --parallel
+
+      - name: Run Unit Tests
+        run: |
+          ctest \
+            --test-dir build \
+            --output-on-failure \
+            --verbose
+
+      - name: Upload Compile Commands
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: compile-commands
+          path: Native/PhotonLab.Native/build/compile_commands.json
+          if-no-files-found: ignore
+
+      - name: Upload Test Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-logs
+          path: Native/PhotonLab.Native/build/Testing
+          if-no-files-found: ignore

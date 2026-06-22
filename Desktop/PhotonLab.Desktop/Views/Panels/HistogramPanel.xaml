@@ -1,0 +1,54 @@
+<UserControl x:Class="PhotonLab.Desktop.Views.Panels.HistogramPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Border Background="#1e1e1e"
+            BorderBrush="#404040"
+            BorderThickness="1">
+
+        <DockPanel>
+
+            <!-- HEADER BAR -->
+            <StackPanel DockPanel.Dock="Top"
+                        Orientation="Horizontal"
+                        Margin="5">
+
+                <TextBlock Text="Histogram"
+                           Foreground="White"
+                           VerticalAlignment="Center"
+                           FontWeight="SemiBold"
+                           Margin="0,0,10,0"/>
+                
+
+                <Button Content="Refresh"
+                        Command="{Binding RefreshHistogramCommand}"
+                        Padding="8,2"/>
+            </StackPanel>
+
+            <!-- HISTOGRAM VISUAL -->
+            <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Disabled">
+
+                <ItemsControl ItemsSource="{Binding HistogramNormalized}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Rectangle Width="2"
+                                       Height="{Binding}"
+                                       Fill="White"
+                                       Opacity="0.9"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+            </ScrollViewer>
+
+        </DockPanel>
+
+    </Border>
+</UserControl>
