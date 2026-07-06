@@ -51,9 +51,7 @@ void MedianFilterStrategy::Process(uint16_t* pixels, int width, int height) {
     }
 
     if (width < 3 || height < 3) {
-        std::copy(pixels,
-              pixels + (size_t(width) * height),
-              pixels);
+        std::copy(pixels, pixels + (size_t(width) * height), pixels);
         return;
     }
 

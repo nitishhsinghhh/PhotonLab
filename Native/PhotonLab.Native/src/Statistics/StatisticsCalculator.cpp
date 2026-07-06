@@ -81,10 +81,9 @@ StatisticsResult StatisticsCalculator::Calculate(const uint16_t* pixels, size_t 
 
     result.StandardDeviation = std::sqrt(varianceSum / static_cast<double>(count));
 
-
-     /*****************************************************************/
-     /* Pass 3: Median                                                */
-     /*****************************************************************/
+    /*****************************************************************/
+    /* Pass 3: Median                                                */
+    /*****************************************************************/
 
     std::vector<uint16_t> sorted(pixels, pixels + count);
 

@@ -136,3 +136,230 @@ TEST(GammaStrategyTests, GammaAlwaysPreservesMonotonicity)
         EXPECT_GE(pixels[i+1], pixels[i]) << "Monotonicity violated at index " << i;
     }
 }
+
+// ============================================================
+// 6. Zero Intensity Remains Zero
+// ============================================================
+
+TEST(GammaStrategyTests, ZeroPixelRemainsZero)
+{
+    uint16_t pixels[] = {0};
+
+    PhotonLab::GammaStrategy strategy(2.2);
+
+    strategy.Process(pixels, 1, 1);
+
+    EXPECT_EQ(0, pixels[0]);
+}
+
+
+// ============================================================
+// 7. Maximum Intensity Remains Maximum
+// ============================================================
+
+TEST(GammaStrategyTests, MaximumPixelRemainsMaximum)
+{
+    uint16_t pixels[] =
+    {
+        std::numeric_limits<uint16_t>::max()
+    };
+
+    PhotonLab::GammaStrategy strategy(2.2);
+
+    strategy.Process(pixels,1,1);
+
+    EXPECT_EQ(
+        std::numeric_limits<uint16_t>::max(),
+        pixels[0]);
+}
+
+// ============================================================
+// 8. Gamma Less Than One Brightens Pixels
+// ============================================================
+
+TEST(GammaStrategyTests, GammaLessThanOneBrightensPixels)
+{
+    uint16_t pixels[]
+    {
+        10000
+    };
+
+    PhotonLab::GammaStrategy strategy(0.5);
+
+    strategy.Process(pixels,1,1);
+
+    EXPECT_GT(pixels[0],10000);
+}
+
+// ============================================================
+// 9. Gamma Greater Than One Darkens Pixels
+// ============================================================
+
+TEST(GammaStrategyTests, GammaGreaterThanOneDarkensPixels)
+{
+    uint16_t pixels[]
+    {
+        30000
+    };
+
+    PhotonLab::GammaStrategy strategy(2.2);
+
+    strategy.Process(pixels,1,1);
+
+    EXPECT_LT(pixels[0],30000);
+}
+
+// ============================================================
+// 10. Every Pixel Is Processed
+// ============================================================
+
+TEST(GammaStrategyTests, EveryPixelIsProcessed)
+{
+    uint16_t pixels[]
+    {
+        1000,
+        2000,
+        3000,
+        4000,
+        5000
+    };
+
+    PhotonLab::GammaStrategy strategy(2.0);
+
+    strategy.Process(pixels,5,1);
+
+    EXPECT_NE(1000,pixels[0]);
+    EXPECT_NE(2000,pixels[1]);
+    EXPECT_NE(3000,pixels[2]);
+    EXPECT_NE(4000,pixels[3]);
+    EXPECT_NE(5000,pixels[4]);
+}
+
+// ============================================================
+// 11. Empty Image Does Nothing
+// ============================================================
+
+TEST(GammaStrategyTests, EmptyImageDoesNothing)
+{
+    std::vector<uint16_t> pixels;
+
+    PhotonLab::GammaStrategy strategy(2.0);
+
+    EXPECT_NO_THROW(
+        strategy.Process(
+            pixels.data(),
+            0,
+            0));
+}
+
+// ============================================================
+// 12. Single Pixel Processing
+// ============================================================
+
+TEST(GammaStrategyTests, SinglePixelProcessing)
+{
+    uint16_t pixels[]
+    {
+        50000
+    };
+
+    PhotonLab::GammaStrategy strategy(1.8);
+
+    strategy.Process(pixels,1,1);
+
+    EXPECT_NE(50000,pixels[0]);
+}
+
+// ============================================================
+// 13. Large Image Processing
+// ============================================================
+
+TEST(GammaStrategyTests, LargeImageProcessesSuccessfully)
+{
+    constexpr int width=2048;
+    constexpr int height=2048;
+
+    std::vector<uint16_t> pixels(
+        width*height,
+        25000);
+
+    PhotonLab::GammaStrategy strategy(2.2);
+
+    EXPECT_NO_THROW(
+        strategy.Process(
+            pixels.data(),
+            width,
+            height));
+}
+
+//  ============================================================
+// 14. Output Always Within Uint16 Range
+//  ============================================================
+
+TEST(GammaStrategyTests, OutputAlwaysWithinUint16Range)
+{
+    std::vector<uint16_t> pixels;
+
+    for(int i=0;i<65536;i+=257)
+        pixels.push_back(i);
+
+    PhotonLab::GammaStrategy strategy(2.2);
+
+    strategy.Process(
+        pixels.data(),
+        pixels.size(),
+        1);
+
+    for(auto value : pixels)
+    {
+        EXPECT_LE(value,65535);
+        EXPECT_GE(value,0);
+    }
+}
+
+// ============================================================
+// 15. Equal Pixels Remain Equal
+// ============================================================
+
+TEST(GammaStrategyTests, EqualPixelsRemainEqual)
+{
+    uint16_t pixels[]
+    {
+        10000,
+        10000,
+        10000,
+        10000
+    };
+
+    PhotonLab::GammaStrategy strategy(2.0);
+
+    strategy.Process(pixels,4,1);
+
+    EXPECT_EQ(pixels[0],pixels[1]);
+    EXPECT_EQ(pixels[1],pixels[2]);
+    EXPECT_EQ(pixels[2],pixels[3]);
+}
+
+// ============================================================
+// 16. Processing Is Deterministic
+// ============================================================
+
+TEST(GammaStrategyTests, ProcessingIsDeterministic)
+{
+    uint16_t first[]
+    {
+        15000
+    };
+
+    uint16_t second[]
+    {
+        15000
+    };
+
+    PhotonLab::GammaStrategy strategy(2.2);
+
+    strategy.Process(first,1,1);
+    strategy.Process(second,1,1);
+
+    EXPECT_EQ(first[0],second[0]);
+}

@@ -37,6 +37,10 @@
 
 #include "Processing/WindowLevelStrategy.hpp"
 
+// ============================================================
+// 1. PIXEL INSIDE WINDOW IS SCALED
+// ============================================================
+
 TEST(WindowLevelTests, PixelInsideWindowIsScaled)
 {
     uint16_t pixels[] { 900 };
@@ -48,6 +52,10 @@ TEST(WindowLevelTests, PixelInsideWindowIsScaled)
     EXPECT_GT(pixels[0], 0);
     EXPECT_LT(pixels[0], 65535);
 }
+
+// ============================================================
+// 2. PIXEL OUTSIDE WINDOW IS CLAMPED
+// ============================================================
 
 TEST(WindowLevelTests, LowerValuesAreClamped)
 {
@@ -62,6 +70,10 @@ TEST(WindowLevelTests, LowerValuesAreClamped)
     EXPECT_EQ(0, pixels[0]);
 }
 
+//  ============================================================
+// 3. PIXEL ABOVE WINDOW IS CLAMPED
+// ============================================================
+
 TEST(WindowLevelTests, UpperValuesAreClamped)
 {
     uint16_t pixels[] { 50000 };
@@ -74,6 +86,10 @@ TEST(WindowLevelTests, UpperValuesAreClamped)
 
     EXPECT_EQ(65535, pixels[0]);
 }
+
+// ============================================================
+// 4. ENTIRE BUFFER IS PROCESSED
+// ============================================================
 
 TEST(WindowLevelTests, EntireBufferProcessed)
 {
@@ -102,7 +118,7 @@ TEST(WindowLevelTests, EntireBufferProcessed)
 }
 
 // ============================================================
-// 4. BENCHMARK
+// 5. Benchmark for 1024x996 image
 // ============================================================
 
 TEST(WindowLevelTests, Benchmark1024x996Image)
@@ -145,3 +161,208 @@ TEST(WindowLevelTests, Benchmark1024x996Image)
         << " ms"
         << std::endl;
 }
+
+// ============================================================
+// 6. NULL POINTER HANDLING
+// ============================================================ 
+
+TEST(WindowLevelTests, HandlesNullPointer)
+{
+    PhotonLab::WindowLevelStrategy strategy(
+        1000,
+        1000);
+
+    EXPECT_NO_THROW(
+        strategy.Process(nullptr,1,1));
+}
+
+//  ============================================================
+// 7. ZERO DIMENSION HANDLING
+//  ============================================================
+
+TEST(WindowLevelTests, HandlesZeroWidth)
+{
+    uint16_t pixel = 1000;
+
+    PhotonLab::WindowLevelStrategy strategy(
+        1000,
+        1000);
+
+    EXPECT_NO_THROW(
+        strategy.Process(&pixel,0,1));
+}
+
+//  ============================================================
+// 8. ZERO HEIGHT HANDLING
+//  ============================================================
+
+TEST(WindowLevelTests, HandlesZeroHeight)
+{
+    uint16_t pixel = 1000;
+
+    PhotonLab::WindowLevelStrategy strategy(
+        1000,
+        1000);
+
+    EXPECT_NO_THROW(
+        strategy.Process(&pixel,1,0));
+}
+
+//  ============================================================
+// 9. NEGATIVE DIMENSIONS HANDLING
+//  ============================================================
+
+TEST(WindowLevelTests, HandlesNegativeDimensions)
+{
+    uint16_t pixel = 1000;
+
+    PhotonLab::WindowLevelStrategy strategy(
+        1000,
+        1000);
+
+    EXPECT_NO_THROW(
+        strategy.Process(&pixel,-1,10));
+
+    EXPECT_NO_THROW(
+        strategy.Process(&pixel,10,-1));
+}
+
+// ============================================================
+// 10. LOWER BOUNDARY CLAMPS TO ZERO
+// ============================================================
+
+TEST(WindowLevelTests, LowerBoundaryClampsToZero)
+{
+    uint16_t pixels[]
+    {
+        500
+    };
+
+    PhotonLab::WindowLevelStrategy strategy(
+        1000,
+        1000);
+
+    strategy.Process(pixels,1,1);
+
+    EXPECT_EQ(0,pixels[0]);
+}
+
+// ============================================================
+// 11. UPPER BOUNDARY CLAMPS TO MAXIMUM
+// ============================================================
+
+TEST(WindowLevelTests, UpperBoundaryClampsToMaximum)
+{
+    uint16_t pixels[]
+    {
+        1500
+    };
+
+    PhotonLab::WindowLevelStrategy strategy(
+        1000,
+        1000);
+
+    strategy.Process(pixels,1,1);
+
+    EXPECT_EQ(65535,pixels[0]);
+}
+
+// ============================================================
+// 12. LEVEL MAPS NEAR HALF INTENSITY
+// ============================================================
+
+TEST(WindowLevelTests, LevelMapsNearHalfIntensity)
+{
+    uint16_t pixels[]
+    {
+        1000
+    };
+
+    PhotonLab::WindowLevelStrategy strategy(
+        1000,
+        1000);
+
+    strategy.Process(pixels,1,1);
+
+    EXPECT_NEAR(
+        32767,
+        pixels[0],
+        1);
+}
+
+// ============================================================
+// 13. LOWER HALF INTENSITY SCALED
+// ============================================================
+
+TEST(WindowLevelTests, LowerHalfIntensityScaled)
+{
+    uint16_t pixels[]
+    {
+        750
+    };
+
+    PhotonLab::WindowLevelStrategy strategy(
+        1000,
+        1000);
+
+    strategy.Process(pixels,1,1);
+
+    EXPECT_LT(
+        pixels[0],
+        32767);
+
+    EXPECT_GT(
+        pixels[0],
+        0);
+}
+
+// ============================================================
+// 14. UPPER HALF INTENSITY SCALED
+// ============================================================
+
+TEST(WindowLevelTests, UpperHalfIntensityScaled)
+{
+    uint16_t pixels[]
+    {
+        1250
+    };
+
+    PhotonLab::WindowLevelStrategy strategy(
+        1000,
+        1000);
+
+    strategy.Process(pixels,1,1);
+
+    EXPECT_GT(
+        pixels[0],
+        32767);
+
+    EXPECT_LT(
+        pixels[0],
+        65535);
+}
+
+//  ============================================================
+// 15. UNIFORM IMAGE PRODUCES UNIFORM OUTPUT
+//  ============================================================
+TEST(WindowLevelTests, UniformImageProducesUniformOutput)
+{
+    std::vector<uint16_t> pixels(100,1000);
+
+    PhotonLab::WindowLevelStrategy strategy(
+        1000,
+        1000);
+
+    strategy.Process(
+        pixels.data(),
+        10,
+        10);
+
+    for(auto pixel : pixels)
+    {
+        EXPECT_EQ(
+            pixels.front(),
+            pixel);
+    }
+}
+

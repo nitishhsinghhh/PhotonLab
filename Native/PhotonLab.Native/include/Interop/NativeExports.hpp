@@ -30,9 +30,9 @@
 #include <cstdint>
 
 #include "Processing/GammaStrategy.hpp"
-#include "Processing/WindowLevelStrategy.hpp"
 #include "Processing/MedianFilterStrategy.hpp"
 #include "Processing/SharpenStrategy.hpp"
+#include "Processing/WindowLevelStrategy.hpp"
 #include "Statistics/HistogramCalculator.hpp"
 #include "Statistics/StatisticsCalculator.hpp"
 #include "Statistics/StatisticsResult.hpp"
