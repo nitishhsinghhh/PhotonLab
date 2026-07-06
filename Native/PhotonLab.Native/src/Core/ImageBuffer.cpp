@@ -50,16 +50,16 @@ int ImageBuffer::Height() const noexcept { return m_height; }
 /**
  * @brief Non-const mutable raw pointer interface for in-place modifications.
  */
-uint16_t *ImageBuffer::Data() noexcept { return m_pixels.data(); }
+uint16_t* ImageBuffer::Data() noexcept { return m_pixels.data(); }
 
 /**
  * @brief Const read-only pointer access optimized for pipeline evaluation.
  */
-const uint16_t *ImageBuffer::Data() const noexcept { return m_pixels.data(); }
+const uint16_t* ImageBuffer::Data() const noexcept { return m_pixels.data(); }
 
 /**
  * @brief Returns complete underlying contiguous element cardinality.
  */
 size_t ImageBuffer::Size() const noexcept { return m_pixels.size(); }
 
-} // namespace PhotonLab
+}  // namespace PhotonLab

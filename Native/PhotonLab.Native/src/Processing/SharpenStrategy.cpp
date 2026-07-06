@@ -41,33 +41,31 @@ namespace PhotonLab {
  * @param width The image width in pixels.
  * @param height The image height in pixels.
  */
-void SharpenStrategy::Process(uint16_t *pixels, int width, int height) {
-  if (pixels == nullptr || width <= 0 || height <= 0) {
-    return;
-  }
-
-  // Create a local copy to preserve source data during kernel convolution
-  std::vector<uint16_t> original(
-      pixels, pixels + (static_cast<size_t>(width) * height));
-
-  for (int y = 1; y < height - 1; ++y) {
-    for (int x = 1; x < width - 1; ++x) {
-      const int center = original[y * width + x];
-      const int top = original[(y - 1) * width + x];
-      const int bottom = original[(y + 1) * width + x];
-      const int left = original[y * width + (x - 1)];
-      const int right = original[y * width + (x + 1)];
-
-      // Apply Laplacian sharpening kernel:
-      // [ 0 -1  0 ]
-      // [ -1 5 -1 ]
-      // [ 0 -1  0 ]
-      int value = (5 * center) - top - bottom - left - right;
-
-      pixels[y * width + x] =
-          static_cast<uint16_t>(std::clamp(value, 0, 65535));
+void SharpenStrategy::Process(uint16_t* pixels, int width, int height) {
+    if (pixels == nullptr || width <= 0 || height <= 0) {
+        return;
     }
-  }
+
+    // Create a local copy to preserve source data during kernel convolution
+    std::vector<uint16_t> original(pixels, pixels + (static_cast<size_t>(width) * height));
+
+    for (int y = 1; y < height - 1; ++y) {
+        for (int x = 1; x < width - 1; ++x) {
+            const int center = original[y * width + x];
+            const int top = original[(y - 1) * width + x];
+            const int bottom = original[(y + 1) * width + x];
+            const int left = original[y * width + (x - 1)];
+            const int right = original[y * width + (x + 1)];
+
+            // Apply Laplacian sharpening kernel:
+            // [ 0 -1  0 ]
+            // [ -1 5 -1 ]
+            // [ 0 -1  0 ]
+            int value = (5 * center) - top - bottom - left - right;
+
+            pixels[y * width + x] = static_cast<uint16_t>(std::clamp(value, 0, 65535));
+        }
+    }
 }
 
-} // namespace PhotonLab
+}  // namespace PhotonLab

@@ -36,4 +36,4 @@ namespace PhotonLab {
 // initializers to ensure direct, zero-overhead memory copying
 // across P/Invoke boundaries to a matching C# [StructLayout] type.
 
-} // namespace PhotonLab
+}  // namespace PhotonLab

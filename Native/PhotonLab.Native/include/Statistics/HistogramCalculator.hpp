@@ -49,16 +49,15 @@ namespace PhotonLab {
  * frequency array for every possible intensity level (0-65535).
  */
 class HistogramCalculator {
-public:
-  /**
-   * @brief Calculates the intensity histogram of an image.
-   * @param pixels Pointer to the 16-bit raw image data.
-   * @param count Total number of pixels in the buffer.
-   * @return std::array containing frequency counts for all 65536 levels.
-   */
-  static std::array<uint32_t, 65536> Calculate(const uint16_t *pixels,
-                                               size_t count);
+   public:
+    /**
+     * @brief Calculates the intensity histogram of an image.
+     * @param pixels Pointer to the 16-bit raw image data.
+     * @param count Total number of pixels in the buffer.
+     * @return std::array containing frequency counts for all 65536 levels.
+     */
+    static std::array<uint32_t, 65536> Calculate(const uint16_t* pixels, size_t count);
 };
-} // namespace PhotonLab
+}  // namespace PhotonLab
 
-#endif // HISTOGRAMCALCULATOR_HPP
+#endif  // HISTOGRAMCALCULATOR_HPP

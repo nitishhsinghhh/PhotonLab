@@ -57,45 +57,42 @@ extern "C" {
 /*****************************************************************/
 
 PHOTONLAB_EXPORT
-int ApplyWindowLevel(uint16_t *pixels, int width, int height, int window,
-                     int level);
+int ApplyWindowLevel(uint16_t* pixels, int width, int height, int window, int level);
 
 /*****************************************************************/
 /* Gamma Correction                                              */
 /*****************************************************************/
 
 PHOTONLAB_EXPORT
-int ApplyGamma(uint16_t *pixels, int width, int height, double gamma);
+int ApplyGamma(uint16_t* pixels, int width, int height, double gamma);
 
 /*****************************************************************/
 /* Median Correction                                             */
 /*****************************************************************/
 
 PHOTONLAB_EXPORT
-int ApplyMedian(uint16_t *pixels, int width, int height);
+int ApplyMedian(uint16_t* pixels, int width, int height);
 
 /*****************************************************************/
 /* Sharpen Correction                                            */
 /*****************************************************************/
 
 PHOTONLAB_EXPORT
-int ApplySharpen(uint16_t *pixels, int width, int height);
+int ApplySharpen(uint16_t* pixels, int width, int height);
 
 /*****************************************************************/
 /* Histogram                                                      */
 /*****************************************************************/
 
 PHOTONLAB_EXPORT
-int CalculateHistogram(const uint16_t *pixels, size_t count,
-                       uint32_t *histogramBuffer, size_t histogramSize);
+int CalculateHistogram(const uint16_t* pixels, size_t count, uint32_t* histogramBuffer, size_t histogramSize);
 
 /*****************************************************************/
 /* Statistics                                                     */
 /*****************************************************************/
 
 PHOTONLAB_EXPORT
-int CalculateStatistics(const uint16_t *pixels, size_t count,
-                        PhotonLab::StatisticsResult *result);
+int CalculateStatistics(const uint16_t* pixels, size_t count, PhotonLab::StatisticsResult* result);
 }
 
 #endif

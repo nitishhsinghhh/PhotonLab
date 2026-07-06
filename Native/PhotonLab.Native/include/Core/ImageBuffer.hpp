@@ -48,32 +48,32 @@ namespace PhotonLab {
  * access to pixel values for native processing algorithms.
  */
 class ImageBuffer {
-public:
-  ImageBuffer() = default;
+   public:
+    ImageBuffer() = default;
 
-  /**
-   * @brief Constructs an image buffer with specified dimensions and data.
-   * @param width The image width in pixels.
-   * @param height The image height in pixels.
-   * @param pixels The initial pixel vector.
-   */
-  ImageBuffer(int width, int height, std::vector<uint16_t> pixels);
+    /**
+     * @brief Constructs an image buffer with specified dimensions and data.
+     * @param width The image width in pixels.
+     * @param height The image height in pixels.
+     * @param pixels The initial pixel vector.
+     */
+    ImageBuffer(int width, int height, std::vector<uint16_t> pixels);
 
-  int Width() const noexcept;
+    int Width() const noexcept;
 
-  int Height() const noexcept;
+    int Height() const noexcept;
 
-  uint16_t *Data() noexcept;
+    uint16_t* Data() noexcept;
 
-  const uint16_t *Data() const noexcept;
+    const uint16_t* Data() const noexcept;
 
-  size_t Size() const noexcept;
+    size_t Size() const noexcept;
 
-private:
-  int m_width{};
-  int m_height{};
-  std::vector<uint16_t> m_pixels;
+   private:
+    int m_width{};
+    int m_height{};
+    std::vector<uint16_t> m_pixels;
 };
-} // namespace PhotonLab
+}  // namespace PhotonLab
 
-#endif // IMAGEBUFFER_HPP
+#endif  // IMAGEBUFFER_HPP

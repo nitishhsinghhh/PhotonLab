@@ -28,18 +28,17 @@
 /* Namespace: PhotonLab                                              */
 /*********************************************************************/
 namespace PhotonLab {
-std::array<uint32_t, 65536>
-HistogramCalculator::Calculate(const uint16_t *pixels, size_t count) {
-  std::array<uint32_t, 65536> histogram{};
+std::array<uint32_t, 65536> HistogramCalculator::Calculate(const uint16_t* pixels, size_t count) {
+    std::array<uint32_t, 65536> histogram{};
 
-  if (pixels == nullptr || count == 0U) {
+    if (pixels == nullptr || count == 0U) {
+        return histogram;
+    }
+
+    for (size_t index = 0; index < count; ++index) {
+        ++histogram[pixels[index]];
+    }
+
     return histogram;
-  }
-
-  for (size_t index = 0; index < count; ++index) {
-    ++histogram[pixels[index]];
-  }
-
-  return histogram;
 }
-} // namespace PhotonLab
+}  // namespace PhotonLab

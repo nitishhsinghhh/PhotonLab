@@ -47,18 +47,18 @@ namespace PhotonLab {
  * reporting.
  */
 struct ImageMetadata {
-  int Width{};
+    int Width{};
 
-  int Height{};
+    int Height{};
 
-  int BitDepth{16};
+    int BitDepth{16};
 
-  uint16_t MinIntensity{};
+    uint16_t MinIntensity{};
 
-  uint16_t MaxIntensity{};
+    uint16_t MaxIntensity{};
 
-  double MeanIntensity{};
+    double MeanIntensity{};
 };
-} // namespace PhotonLab
+}  // namespace PhotonLab
 
-#endif // IMAGEMETADATA_HPP
+#endif  // IMAGEMETADATA_HPP

@@ -38,32 +38,29 @@
 #include <cstdint>
 
 namespace PhotonLab {
-WindowLevelStrategy::WindowLevelStrategy(int window, int level)
-    : m_window(window), m_level(level) {}
+WindowLevelStrategy::WindowLevelStrategy(int window, int level) : m_window(window), m_level(level) {}
 
-void WindowLevelStrategy::Process(uint16_t *pixels, int width, int height) {
-
-  if (pixels == nullptr || width <= 0 || height <= 0) {
-    return;
-  }
-
-  const int lower = m_level - (m_window / 2);
-  const int upper = m_level + (m_window / 2);
-
-  const size_t size = static_cast<size_t>(width) * height;
-
-  for (size_t i = 0; i < size; ++i) {
-    auto &pixel = pixels[i];
-
-    if (pixel <= lower) {
-      pixel = 0;
-    } else if (pixel >= upper) {
-      pixel = 65535;
-    } else {
-      pixel =
-          static_cast<uint16_t>(((pixel - lower) * 65535) / (upper - lower));
+void WindowLevelStrategy::Process(uint16_t* pixels, int width, int height) {
+    if (pixels == nullptr || width <= 0 || height <= 0) {
+        return;
     }
-  }
+
+    const int lower = m_level - (m_window / 2);
+    const int upper = m_level + (m_window / 2);
+
+    const size_t size = static_cast<size_t>(width) * height;
+
+    for (size_t i = 0; i < size; ++i) {
+        auto& pixel = pixels[i];
+
+        if (pixel <= lower) {
+            pixel = 0;
+        } else if (pixel >= upper) {
+            pixel = 65535;
+        } else {
+            pixel = static_cast<uint16_t>(((pixel - lower) * 65535) / (upper - lower));
+        }
+    }
 }
 
-} // namespace PhotonLab
+}  // namespace PhotonLab

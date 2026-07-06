@@ -49,26 +49,26 @@ namespace PhotonLab {
  * viewable range based on defined window width and level.
  */
 class WindowLevelStrategy : public IImageProcessingStrategy {
-public:
-  /**
-   * @brief Constructs the strategy with specific contrast parameters.
-   * @param window The range of intensity values to display.
-   * @param level The center intensity value.
-   */
-  WindowLevelStrategy(int window, int level);
+   public:
+    /**
+     * @brief Constructs the strategy with specific contrast parameters.
+     * @param window The range of intensity values to display.
+     * @param level The center intensity value.
+     */
+    WindowLevelStrategy(int window, int level);
 
-  /**
-   * @brief Applies the window/level transformation to the buffer.
-   * @param pixels Pointer to the raw 16-bit pixel data.
-   * @param width Image width in pixels.
-   * @param height Image height in pixels.
-   */
-  void Process(uint16_t *pixels, int width, int height) override;
+    /**
+     * @brief Applies the window/level transformation to the buffer.
+     * @param pixels Pointer to the raw 16-bit pixel data.
+     * @param width Image width in pixels.
+     * @param height Image height in pixels.
+     */
+    void Process(uint16_t* pixels, int width, int height) override;
 
-private:
-  int m_window;
-  int m_level;
+   private:
+    int m_window;
+    int m_level;
 };
-} // namespace PhotonLab
+}  // namespace PhotonLab
 
-#endif // WINDOWLEVELSTRATEGY_HPP
+#endif  // WINDOWLEVELSTRATEGY_HPP
