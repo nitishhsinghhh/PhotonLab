@@ -46,21 +46,21 @@ namespace PhotonLab {
  * @brief Minimum intensity value found in the buffer.
  */
 struct StatisticsResult {
-    uint16_t Min{0};
-    uint16_t Max{0};
-    double Mean{0.0};
-    double StandardDeviation{0.0};
-    double Median{0.0};
+  uint16_t Min{0};
+  uint16_t Max{0};
+  double Mean{0.0};
+  double StandardDeviation{0.0};
+  double Median{0.0};
 
-    // Reset method to clear results
-    void Reset() {
-        Min = 0;
-        Max = 0;
-        Mean = 0.0;
-        StandardDeviation = 0.0;
-        Median = 0.0;
-    }
+  // Reset method to clear results
+  void Reset() {
+    Min = 0;
+    Max = 0;
+    Mean = 0.0;
+    StandardDeviation = 0.0;
+    Median = 0.0;
+  }
 };
-}  // namespace PhotonLab
+} // namespace PhotonLab
 
-#endif  // STATISTICSRESULT_HPP
+#endif // STATISTICSRESULT_HPP

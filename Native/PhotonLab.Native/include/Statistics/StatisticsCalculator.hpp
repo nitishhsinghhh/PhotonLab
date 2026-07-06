@@ -47,15 +47,15 @@ namespace PhotonLab {
  * @brief Engine for high-performance statistical analysis of image buffers.
  */
 class StatisticsCalculator {
-   public:
-    /**
-     * @brief Calculates Min, Max, Mean, and Standard Deviation.
-     * @param pixels Pointer to the 16-bit image pixel buffer.
-     * @param count Total number of pixels in the buffer.
-     * @return StatisticsResult containing the calculated metrics.
-     */
-    static StatisticsResult Calculate(const uint16_t* pixels, size_t count);
+public:
+  /**
+   * @brief Calculates Min, Max, Mean, and Standard Deviation.
+   * @param pixels Pointer to the 16-bit image pixel buffer.
+   * @param count Total number of pixels in the buffer.
+   * @return StatisticsResult containing the calculated metrics.
+   */
+  static StatisticsResult Calculate(const uint16_t *pixels, size_t count);
 };
-}  // namespace PhotonLab
+} // namespace PhotonLab
 
-#endif  // STATISTICSCALCULATOR_HPP
+#endif // STATISTICSCALCULATOR_HPP

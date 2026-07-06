@@ -47,18 +47,18 @@ namespace PhotonLab {
  * (e.g., Gamma, Sharpen, Median Filter) into the processing pipeline.
  */
 class IImageProcessingStrategy {
-   public:
-    /** @brief Virtual destructor to ensure proper cleanup of derived types. */
-    virtual ~IImageProcessingStrategy() = default;
+public:
+  /** @brief Virtual destructor to ensure proper cleanup of derived types. */
+  virtual ~IImageProcessingStrategy() = default;
 
-    /**
-     * @brief Performs pixel-wise processing on the provided buffer.
-     * @param pixels Pointer to the raw 16-bit pixel data array.
-     * @param width Image width in pixels.
-     * @param height Image height in pixels.
-     */
-    virtual void Process(uint16_t* pixels, int width, int height) = 0;
+  /**
+   * @brief Performs pixel-wise processing on the provided buffer.
+   * @param pixels Pointer to the raw 16-bit pixel data array.
+   * @param width Image width in pixels.
+   * @param height Image height in pixels.
+   */
+  virtual void Process(uint16_t *pixels, int width, int height) = 0;
 };
-}  // namespace PhotonLab
+} // namespace PhotonLab
 
-#endif  // IIMAGEPROCESSINGSTRATEGY_HPP
+#endif // IIMAGEPROCESSINGSTRATEGY_HPP

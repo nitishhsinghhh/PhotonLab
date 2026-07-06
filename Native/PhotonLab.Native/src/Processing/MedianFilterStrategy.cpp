@@ -45,41 +45,40 @@ namespace PhotonLab {
  * @param width The image width in pixels.
  * @param height The image height in pixels.
  */
-void MedianFilterStrategy::Process(uint16_t* pixels, int width, int height) {
-    if (pixels == nullptr || width <= 0 || height <= 0) {
-        return;
-    }
+void MedianFilterStrategy::Process(uint16_t *pixels, int width, int height) {
+  if (pixels == nullptr || width <= 0 || height <= 0) {
+    return;
+  }
 
-    if (width < 3 || height < 3) {
-        std::copy(pixels,
-              pixels + (size_t(width) * height),
-              pixels);
-        return;
-    }
+  if (width < 3 || height < 3) {
+    std::copy(pixels, pixels + (size_t(width) * height), pixels);
+    return;
+  }
 
-    // Create a local copy to ensure read-only access to source data
-    std::vector<uint16_t> original(pixels, pixels + (static_cast<size_t>(width) * height));
+  // Create a local copy to ensure read-only access to source data
+  std::vector<uint16_t> original(
+      pixels, pixels + (static_cast<size_t>(width) * height));
 
-    // Process spatial neighborhood excluding the image border (1-pixel padding)
-    for (int y = 1; y < height - 1; ++y) {
-        for (int x = 1; x < width - 1; ++x) {
-            std::array<uint16_t, 9> window;
-            int index = 0;
+  // Process spatial neighborhood excluding the image border (1-pixel padding)
+  for (int y = 1; y < height - 1; ++y) {
+    for (int x = 1; x < width - 1; ++x) {
+      std::array<uint16_t, 9> window;
+      int index = 0;
 
-            // Collect 3x3 neighborhood intensity values
-            for (int ky = -1; ky <= 1; ++ky) {
-                for (int kx = -1; kx <= 1; ++kx) {
-                    window[index++] = original[(y + ky) * width + (x + kx)];
-                }
-            }
-
-            // Determine median via partial or full sort
-            std::sort(window.begin(), window.end());
-
-            // Assign median to the destination buffer
-            pixels[y * width + x] = window[4];
+      // Collect 3x3 neighborhood intensity values
+      for (int ky = -1; ky <= 1; ++ky) {
+        for (int kx = -1; kx <= 1; ++kx) {
+          window[index++] = original[(y + ky) * width + (x + kx)];
         }
+      }
+
+      // Determine median via partial or full sort
+      std::sort(window.begin(), window.end());
+
+      // Assign median to the destination buffer
+      pixels[y * width + x] = window[4];
     }
+  }
 }
 
-}  // namespace PhotonLab
+} // namespace PhotonLab

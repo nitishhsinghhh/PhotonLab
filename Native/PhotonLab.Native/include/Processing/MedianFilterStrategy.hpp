@@ -48,20 +48,20 @@ namespace PhotonLab {
  * noise while preserving structural edges in medical images.
  */
 class MedianFilterStrategy : public IImageProcessingStrategy {
-   public:
-    /**
-     * @brief Constructs the strategy.
-     */
-    MedianFilterStrategy() = default;
+public:
+  /**
+   * @brief Constructs the strategy.
+   */
+  MedianFilterStrategy() = default;
 
-    /**
-     * @brief Applies the median filter transformation to the pixel buffer.
-     * @param pixels Pointer to the raw 16-bit pixel data.
-     * @param width Image width in pixels.
-     * @param height Image height in pixels.
-     */
-    void Process(uint16_t* pixels, int width, int height) override;
+  /**
+   * @brief Applies the median filter transformation to the pixel buffer.
+   * @param pixels Pointer to the raw 16-bit pixel data.
+   * @param width Image width in pixels.
+   * @param height Image height in pixels.
+   */
+  void Process(uint16_t *pixels, int width, int height) override;
 };
-}  // namespace PhotonLab
+} // namespace PhotonLab
 
-#endif  // MEDIANFILTERSTRATEGY_HPP
+#endif // MEDIANFILTERSTRATEGY_HPP

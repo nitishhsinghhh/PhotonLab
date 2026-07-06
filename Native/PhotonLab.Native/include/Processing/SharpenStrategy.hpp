@@ -48,26 +48,26 @@ namespace PhotonLab {
  * intensity contrasts through a discrete 3x3 Laplacian kernel matrix.
  */
 class SharpenStrategy : public IImageProcessingStrategy {
-   public:
-    /**
-     * @brief Default constructor initializing base structural state.
-     */
-    SharpenStrategy() = default;
+public:
+  /**
+   * @brief Default constructor initializing base structural state.
+   */
+  SharpenStrategy() = default;
 
-    /**
-     * @brief Default virtual destructor enforcing clean polymorphic cleanup.
-     */
-    ~SharpenStrategy() override = default;
+  /**
+   * @brief Default virtual destructor enforcing clean polymorphic cleanup.
+   */
+  ~SharpenStrategy() override = default;
 
-    /**
-     * @brief Applies a spatial 3x3 sharpening convolution to the pixel buffer.
-     * @param pixels Pointer to the contiguous, raw 16-bit intensity values.
-     * @param width  Horizontal image boundary constraint in pixels.
-     * @param height Vertical image boundary constraint in pixels.
-     */
-    void Process(uint16_t* pixels, int width, int height) override;
+  /**
+   * @brief Applies a spatial 3x3 sharpening convolution to the pixel buffer.
+   * @param pixels Pointer to the contiguous, raw 16-bit intensity values.
+   * @param width  Horizontal image boundary constraint in pixels.
+   * @param height Vertical image boundary constraint in pixels.
+   */
+  void Process(uint16_t *pixels, int width, int height) override;
 };
 
-}  // namespace PhotonLab
+} // namespace PhotonLab
 
-#endif  // SHARPENSTRATEGY_HPP
+#endif // SHARPENSTRATEGY_HPP

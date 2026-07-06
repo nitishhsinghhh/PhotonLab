@@ -49,24 +49,24 @@ namespace PhotonLab {
  * and contrast in 16-bit medical imaging pipelines.
  */
 class GammaStrategy : public IImageProcessingStrategy {
-   public:
-    /**
-     * @brief Constructs the strategy with a specified gamma value.
-     * @param gamma The power-law exponent (e.g., 2.2 for sRGB).
-     */
-    explicit GammaStrategy(double gamma);
+public:
+  /**
+   * @brief Constructs the strategy with a specified gamma value.
+   * @param gamma The power-law exponent (e.g., 2.2 for sRGB).
+   */
+  explicit GammaStrategy(double gamma);
 
-    /**
-     * @brief Applies the gamma transformation to the pixel buffer.
-     * @param pixels Pointer to the raw 16-bit pixel data.
-     * @param width Image width in pixels.
-     * @param height Image height in pixels.
-     */
-    void Process(uint16_t* pixels, int width, int height) override;
+  /**
+   * @brief Applies the gamma transformation to the pixel buffer.
+   * @param pixels Pointer to the raw 16-bit pixel data.
+   * @param width Image width in pixels.
+   * @param height Image height in pixels.
+   */
+  void Process(uint16_t *pixels, int width, int height) override;
 
-   private:
-    double m_gamma;
+private:
+  double m_gamma;
 };
-}  // namespace PhotonLab
+} // namespace PhotonLab
 
-#endif  // GAMMASTRATEGY_HPP
+#endif // GAMMASTRATEGY_HPP

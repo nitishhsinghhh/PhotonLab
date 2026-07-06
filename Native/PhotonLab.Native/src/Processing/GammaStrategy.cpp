@@ -41,19 +41,19 @@
 namespace PhotonLab {
 GammaStrategy::GammaStrategy(double gamma) : m_gamma(gamma) {}
 
-void GammaStrategy::Process(uint16_t* pixels, int width, int height) {
-    const size_t count = static_cast<size_t>(width) * height;
+void GammaStrategy::Process(uint16_t *pixels, int width, int height) {
+  const size_t count = static_cast<size_t>(width) * height;
 
-    // Apply Gamma transformation: V_out = V_in ^ gamma
-    for (size_t i = 0; i < count; ++i) {
-        // Normalize to [0.0, 1.0] range
-        double normalized = static_cast<double>(pixels[i]) / 65535.0;
+  // Apply Gamma transformation: V_out = V_in ^ gamma
+  for (size_t i = 0; i < count; ++i) {
+    // Normalize to [0.0, 1.0] range
+    double normalized = static_cast<double>(pixels[i]) / 65535.0;
 
-        // Apply non-linear power law adjustment
-        normalized = std::pow(normalized, m_gamma);
+    // Apply non-linear power law adjustment
+    normalized = std::pow(normalized, m_gamma);
 
-        // Rescale back to 16-bit range [0, 65535]
-        pixels[i] = static_cast<uint16_t>(normalized * 65535.0);
-    }
+    // Rescale back to 16-bit range [0, 65535]
+    pixels[i] = static_cast<uint16_t>(normalized * 65535.0);
+  }
 }
-}  // namespace PhotonLab
+} // namespace PhotonLab

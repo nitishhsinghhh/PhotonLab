@@ -46,101 +46,108 @@
 
 extern "C" {
 
-PHOTONLAB_EXPORT int ApplyWindowLevel(uint16_t* pixels, int width, int height, int window, int level) {
-    try {
-        if (pixels == nullptr) {
-            return -1;
-        }
-
-        PhotonLab::WindowLevelStrategy strategy(window, level);
-
-        strategy.Process(pixels, width, height);
-
-        return 0;
-    } catch (...) {
-        return -1;
+PHOTONLAB_EXPORT int ApplyWindowLevel(uint16_t *pixels, int width, int height,
+                                      int window, int level) {
+  try {
+    if (pixels == nullptr) {
+      return -1;
     }
+
+    PhotonLab::WindowLevelStrategy strategy(window, level);
+
+    strategy.Process(pixels, width, height);
+
+    return 0;
+  } catch (...) {
+    return -1;
+  }
 }
 
-PHOTONLAB_EXPORT int ApplyGamma(uint16_t* pixels, int width, int height, double gamma) {
-    try {
-        if (pixels == nullptr) {
-            return -1;
-        }
-
-        PhotonLab::GammaStrategy strategy(gamma);
-
-        strategy.Process(pixels, width, height);
-
-        return 0;
-    } catch (...) {
-        return -1;
+PHOTONLAB_EXPORT int ApplyGamma(uint16_t *pixels, int width, int height,
+                                double gamma) {
+  try {
+    if (pixels == nullptr) {
+      return -1;
     }
+
+    PhotonLab::GammaStrategy strategy(gamma);
+
+    strategy.Process(pixels, width, height);
+
+    return 0;
+  } catch (...) {
+    return -1;
+  }
 }
 
-PHOTONLAB_EXPORT int ApplyMedian(uint16_t* pixels, int width, int height) {
-    try {
-        if (pixels == nullptr) return -1;
+PHOTONLAB_EXPORT int ApplyMedian(uint16_t *pixels, int width, int height) {
+  try {
+    if (pixels == nullptr)
+      return -1;
 
-        PhotonLab::MedianFilterStrategy strategy;
+    PhotonLab::MedianFilterStrategy strategy;
 
-        strategy.Process(pixels, width, height);
+    strategy.Process(pixels, width, height);
 
-        return 0;
-    } catch (...) {
-        return -1;
-    }
+    return 0;
+  } catch (...) {
+    return -1;
+  }
 }
 
-PHOTONLAB_EXPORT int ApplySharpen(uint16_t* pixels, int width, int height) {
-    try {
-        if (pixels == nullptr) return -1;
+PHOTONLAB_EXPORT int ApplySharpen(uint16_t *pixels, int width, int height) {
+  try {
+    if (pixels == nullptr)
+      return -1;
 
-        PhotonLab::SharpenStrategy strategy;
+    PhotonLab::SharpenStrategy strategy;
 
-        strategy.Process(pixels, width, height);
+    strategy.Process(pixels, width, height);
 
-        return 0;
-    } catch (...) {
-        return -1;
-    }
+    return 0;
+  } catch (...) {
+    return -1;
+  }
 }
 
-PHOTONLAB_EXPORT int CalculateHistogram(const uint16_t* pixels, size_t count, uint32_t* histogramBuffer,
+PHOTONLAB_EXPORT int CalculateHistogram(const uint16_t *pixels, size_t count,
+                                        uint32_t *histogramBuffer,
                                         size_t histogramSize) {
-    try {
-        if (pixels == nullptr || histogramBuffer == nullptr || histogramSize != 65536U) {
-            return -1;
-        }
-
-        PhotonLab::HistogramCalculator calculator;
-
-        auto histogram = calculator.Calculate(pixels, count);
-
-        std::copy(histogram.begin(), histogram.end(), histogramBuffer);
-
-        return 0;
-    } catch (...) {
-        return -1;
+  try {
+    if (pixels == nullptr || histogramBuffer == nullptr ||
+        histogramSize != 65536U) {
+      return -1;
     }
+
+    PhotonLab::HistogramCalculator calculator;
+
+    auto histogram = calculator.Calculate(pixels, count);
+
+    std::copy(histogram.begin(), histogram.end(), histogramBuffer);
+
+    return 0;
+  } catch (...) {
+    return -1;
+  }
 }
 
-PHOTONLAB_EXPORT int CalculateStatistics(const uint16_t* pixels, size_t count, PhotonLab::StatisticsResult* result) {
-    try {
-        if (pixels == nullptr || result == nullptr) {
-            return -1;
-        }
-
-        PhotonLab::StatisticsCalculator calculator;
-
-        auto statistics = calculator.Calculate(pixels, count);
-
-        *result = statistics;
-
-        return 0;
-    } catch (...) {
-        return -1;
+PHOTONLAB_EXPORT int CalculateStatistics(const uint16_t *pixels, size_t count,
+                                         PhotonLab::StatisticsResult *result) {
+  try {
+    if (pixels == nullptr || result == nullptr) {
+      return -1;
     }
+
+    PhotonLab::StatisticsCalculator calculator;
+
+    auto statistics = calculator.Calculate(pixels, count);
+
+    *result = statistics;
+
+    return 0;
+  } catch (...) {
+    return -1;
+  }
 }
 
-}  // extern "C"
+} // extern "C"
