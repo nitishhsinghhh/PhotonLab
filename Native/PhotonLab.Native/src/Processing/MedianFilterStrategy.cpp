@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 /*********************************************************************/
-/* File        : MedianFilterStrategy.cpp                           */
+/* File        : MedianFilterStrategy.cpp                            */
 /* Author      : Nitish Singh                                        */
 /* Created     : 2026-06-10                                          */
 /*                                                                   */

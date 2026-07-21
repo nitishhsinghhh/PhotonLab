@@ -13,10 +13,24 @@
 /* Module           : Interop                                        */
 /* Component        : Native Export Interface                        */
 /* Thread Safe      : Yes                                            */
+/* Complexity       : O(1) (API Dispatch)                            */
 /* API Status       : Stable                                         */
+/* Exception Safety : Strong (Exceptions do not cross C ABI)         */
 /*                                                                   */
-/* Description      : C ABI exports consumed by .NET through         */
-/*                    P/Invoke.                                      */
+/* Description : Defines the C ABI exported functions consumed by    */
+/* .NET through P/Invoke. These APIs expose the native image         */
+/* processing engine, histogram calculation, and statistics          */
+/* computation in a platform-independent manner.                     */
+/*                                                                   */
+/* Notes       : Maintains a stable binary interface for managed     */
+/* interop. All exported functions use C linkage to prevent name     */
+/* mangling and simplify cross-platform dynamic loading.             */
+/*                                                                   */
+/* Revision History:                                                 */
+/* ----------------------------------------------------------------- */
+/* Version    Date       Author         Description                  */
+/* ----------------------------------------------------------------- */
+/* 1.0        2026-06-10 Nitish Singh   Initial implementation       */
 /*********************************************************************/
 
 #ifndef NATIVEEXPORTS_HPP

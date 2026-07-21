@@ -17,10 +17,20 @@
 /* API Status       : Stable                                         */
 /* Exception Safety : N/A (Plain Old Data)                           */
 /*                                                                   */
-/* Description : Provides explicit compilation scope linkage for     */
-/* the structural data contract backing native image                 */
-/* pipelines and .NET managed UI interop states.                     */
+/* Description : Provides the compilation unit for the               */
+/* ImageMetadata data contract used by the native image processing   */
+/* engine and managed .NET interop layer.                            */
 /*                                                                   */
+/* Notes       : The implementation is intentionally empty because   */
+/* ImageMetadata is a Plain Old Data (POD) structure. This file      */
+/* exists to provide a dedicated translation unit and maintain a     */
+/* consistent project layout.                                        */
+/*                                                                   */
+/* Revision History:                                                 */
+/* ----------------------------------------------------------------- */
+/* Version    Date       Author         Description                  */
+/* ----------------------------------------------------------------- */
+/* 1.0        2026-06-10 Nitish Singh   Initial implementation       */
 /*********************************************************************/
 
 #include "Core/ImageMetadata.hpp"
