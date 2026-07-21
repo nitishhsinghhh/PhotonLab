@@ -35,20 +35,21 @@
   * [Image Processing](#image-processing)
   * [Architecture Features](#architecture-features)
   * [Analysis and Diagnostics](analysis-and-diagnostics)
-* [2. Solution Structure](#solution-structure)
+* [2. Cross Platform Native Build](#cross-platform-native-build)
+* [3. Solution Structure](#solution-structure)
   * [Components](#components)
-* [3. Architecture](#architecture)
-* [4. Image Processing Pipeline](#image-processing-pipeline)
-* [5. Build Requirements](#build-requirements)
+* [4. Architecture](#architecture)
+* [5. Image Processing Pipeline](#image-processing-pipeline)
+* [6. Build Requirements](#build-requirements)
   * [Development Environment](#development-environment)
   * [Native Dependencies](#native-dependencies)
-* [6. Testing](#testing)
+* [7. Testing](#testing)
   * [Unit Tests](#unit-tests)
   * [Integration Tests](#integration-tests)
   * [Native Tests](#native-tests)
-* [7. Native Integration](#native-integration)
-* [8. Future Enhancements](#future-enhancements)
-* [9. License](#license)
+* [8. Native Integration](#native-integration)
+* [9. Future Enhancements](#future-enhancements)
+* [10. License](#license)
 
 ---
 
@@ -57,7 +58,7 @@
 The following diagram illustrates the strict downward dependency flow within PhotonLab, ensuring a responsive UI and high-performance image processing:
 
 <p align="center">
-  <img src="Docs/Images/Architecture_V1.1.png" alt="PhotonLab Architecture" width="1500"/>
+  <img src="Docs/Images/Architecture_V1.2.png" alt="PhotonLab Architecture" width="1500"/>
 </p>
 
 ---
@@ -67,8 +68,6 @@ The following diagram illustrates the strict downward dependency flow within Pho
 PhotonLab is a desktop imaging application designed for viewing, analyzing, and processing 16-bit TIFF images. The platform combines a modern WPF user interface, a managed C# service layer, and a high-performance native C++ processing engine to deliver responsive visualization and advanced image analysis capabilities.
 
 ---
-
-## Features
 
 ## Features
 
@@ -113,6 +112,32 @@ PhotonLab is a desktop imaging application designed for viewing, analyzing, and 
 
 
 ---
+
+## Cross Platform Native Build
+
+PhotonLab includes a fully automated Docker-based native build pipeline.
+
+```
+Developer
+      │
+      ▼
+Docker Multi-stage Build
+      │
+      ├───────────────► Linux (.so)
+      │
+      ├───────────────► Windows (.dll via MinGW)
+      │
+      └───────────────► macOS (.dylib local build)
+      │
+      ▼
+GoogleTest Validation
+      │
+      ▼
+Artifact Extraction
+      │
+      ▼
+Unified Distribution
+```
 
 ## Solution Structure
 

@@ -44,7 +44,7 @@ namespace PhotonLab {
 /**
  * @class ImageBuffer
  * @brief Manages a 16-bit pixel buffer with associated dimensions.
- * * Represents a single frame of image data, providing memory-safe
+ * @details Represents a single frame of image data, providing memory-safe
  * access to pixel values for native processing algorithms.
  */
 class ImageBuffer {
@@ -60,13 +60,9 @@ class ImageBuffer {
     ImageBuffer(int width, int height, std::vector<uint16_t> pixels);
 
     int Width() const noexcept;
-
     int Height() const noexcept;
-
     uint16_t* Data() noexcept;
-
     const uint16_t* Data() const noexcept;
-
     size_t Size() const noexcept;
 
    private:

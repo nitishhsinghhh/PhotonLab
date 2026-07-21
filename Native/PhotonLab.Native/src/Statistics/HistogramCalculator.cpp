@@ -13,13 +13,23 @@
 /* Module           : Core/Statistics                                */
 /* Component        : Histogram Calculation Engine                   */
 /* Thread Safe      : Yes                                            */
-/* Complexity       : O(n)                                           */
+/* Complexity       : O(N), where N is the number of pixels          */
 /* API Status       : Stable                                         */
 /* Exception Safety : Basic Guarantee                                */
 /*                                                                   */
-/* Description : Generates intensity distribution histograms         */
-/*               for 16-bit image data.                              */
+/* Description : Implements the histogram generation algorithm for   */
+/* 16-bit grayscale image buffers by computing the frequency of      */
+/* each possible intensity value (0–65535).                          */
 /*                                                                   */
+/* Notes       : Returns a fixed-size histogram containing 65,536    */
+/* bins. Invalid input (nullptr or zero pixel count) results in an   */
+/* empty histogram with all bins initialized to zero.                */
+/*                                                                   */
+/* Revision History:                                                 */
+/* ----------------------------------------------------------------- */
+/* Version    Date       Author         Description                  */
+/* ----------------------------------------------------------------- */
+/* 1.0        2026-06-10 Nitish Singh   Initial implementation       */
 /*********************************************************************/
 
 #include "Statistics/HistogramCalculator.hpp"

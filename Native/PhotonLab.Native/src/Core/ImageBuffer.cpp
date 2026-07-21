@@ -13,14 +13,23 @@
 /* Module           : Core                                           */
 /* Component        : Image Memory Container                         */
 /* Thread Safe      : No (Instance isolation managed by caller)      */
-/* Complexity       : O(1) for data accessors, O(N) allocation       */
+/* Complexity       : O(1) for accessors, O(N) for allocation/move   */
 /* API Status       : Stable                                         */
-/* Exception Safety : Strong Guarantee (Constructor move semantics)  */
+/* Exception Safety : Strong Guarantee (Move construction)           */
 /*                                                                   */
-/* Description : Explicit wrapper encapsulating raw 16-bit medical   */
-/* and scientific pixel buffers, providing contiguous                */
-/* memory interfaces for native interop layers.                      */
+/* Description : Implements the ImageBuffer class, providing a       */
+/* lightweight wrapper around contiguous 16-bit image pixel storage  */
+/* for native image processing and managed interoperability.         */
 /*                                                                   */
+/* Notes       : Designed for high-performance image processing.     */
+/* Uses std::vector<uint16_t> to guarantee contiguous memory         */
+/* required by native algorithms and P/Invoke interfaces.            */
+/*                                                                   */
+/* Revision History:                                                 */
+/* ----------------------------------------------------------------- */
+/* Version    Date       Author         Description                  */
+/* ----------------------------------------------------------------- */
+/* 1.0        2026-06-10 Nitish Singh   Initial implementation       */
 /*********************************************************************/
 
 #include "Core/ImageBuffer.hpp"
