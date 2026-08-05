@@ -4,7 +4,7 @@
 # SYSTEM      : PhotonLab Imaging Platform                           */
 # SUBSYSTEM   : Repository Bootstrap Framework                       */
 # COMPONENT   : bootstrap-photonlab                                  */
-# VERSION     : 1.2                                                  */
+# VERSION     : 1.3                                                  */
 #                                                                    */
 # DESCRIPTION : Generates the complete PhotonLab repository          */
 #               structure including native image processing          */
@@ -34,7 +34,7 @@
 #                                                                    */
 # DEPENDENCIES:                                                      */
 #                 * Bash, mkdir, create_file, chmod                  */
-#                 * CMake (Verified at runtime)                      */
+#                 * CMake, dotnet, clang-format, git                 */
 #                                                                    */
 # LOCATION    : scripts/bootstrap-photonlab.sh                       */
 #                                                                    */
@@ -46,6 +46,9 @@
 # 1.1  2026-06-09  Nitish Singh    Added Pre-flight Env Validation   */
 # 1.2  2026-06-10  Nitish Singh    Added Idempotent File Creation    */
 #                                  Prevented Existing File Overwrite */
+# 1.3  2026-08-05  Nitish Singh    Extended dependency validation to */
+#                                  include .NET SDK, clang-format,   */
+#                                  and Git                           */
 #*********************************************************************/
 
 #*********************************************************************/
@@ -186,7 +189,7 @@ readonly DIR_TESTS="Tests/${PROJECT_NAME}.UnitTests"
 readonly DIR_NATIVE_TESTS="Tests/${PROJECT_NAME}.NativeTests"
 
 #*********************************************************************/
-# Environment Validation & Safety Guards                            */
+# Environment Validation & Safety Guards                             */
 #*********************************************************************/
 
 check_dependencies() {
@@ -213,6 +216,28 @@ check_dependencies() {
             exit 1
         fi
     fi
+
+    # Check for .NET SDK
+    if ! command -v dotnet &> /dev/null; then
+        log_warn ".NET SDK is not installed."
+        log_info "Please install .NET 8 SDK from https://dotnet.microsoft.com/download"
+        exit 1
+    fi
+
+    # Check for clang-format
+    if ! command -v clang-format &> /dev/null; then
+        log_warn "clang-format is not installed."
+        log_info "Install via your package manager (e.g., 'brew install clang-format', 'apt-get install clang-format')."
+        exit 1
+    fi
+
+    # Check for Git
+    if ! command -v git &> /dev/null; then
+        log_warn "Git is not installed."
+        log_info "Please install Git from https://git-scm.com/downloads"
+        exit 1
+    fi
+
     log_success "Dependencies verified."
 }
 
@@ -272,7 +297,7 @@ IndentWidth: 4
 ColumnLimit: 120"
 
 #*********************************************************************/
-# Phase 2 - Documentation Infrastructure                              */
+# Phase 2 - Documentation Infrastructure                             */
 #*********************************************************************/
 
 log_info "Provisioning documentation hierarchy..."
