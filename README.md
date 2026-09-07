@@ -9,8 +9,10 @@
 </p>
 
 ![Quality](https://img.shields.io/github/actions/workflow/status/nitishhsinghhh/PhotonLab/cpp-quality-guard.yml?branch=main&label=Quality%3A%20Clang&style=flat-square)
-![Full Project Build](https://img.shields.io/github/actions/workflow/status/nitishhsinghhh/PhotonLab/native-engine-ci-windows.yml?branch=main&label=Build%3A%20Multi-OS&style=flat-square)
 ![Cache Cleanup](https://img.shields.io/github/actions/workflow/status/nitishhsinghhh/PhotonLab/cleanup-cache.yml?branch=main&label=Cache%3A%20Cleanup&style=flat-square)
+![Windows Build](https://img.shields.io/github/actions/workflow/status/nitishhsinghhh/PhotonLab/native-engine-ci-windows.yml?branch=main&label=Build%3A%20Windows&style=flat-square)
+![Linux Build (Planned)](https://img.shields.io/badge/Build-Linux%20Planned-lightgrey?style=flat-square&logo=linux)
+![macOS Build (Planned)](https://img.shields.io/badge/Build-macOS%20Planned-lightgrey?style=flat-square&logo=apple)
 
 ---
 
