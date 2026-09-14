@@ -61,12 +61,14 @@ The boundary ensures isolation between runtime environments while maintaining hi
 PhotonLab follows a strict ownership separation model to prevent memory corruption and reduce GC pressure.
 
 Rules:
+
 - .NET owns managed arrays (ushort[], byte[])
 - Native engine operates only on buffers passed from .NET
 - No implicit memory transfer across boundary
 - No shared heap allocations between runtimes
 
 Buffer Strategy:
+
 - Input: Managed 16-bit buffer (ushort[])
 - Processing: Native in-place or output buffer
 - Output: Managed buffer returned or reused
@@ -91,7 +93,7 @@ Unlike traditional interop designs, PhotonLab does not call native functions dir
 
 Instead, execution flows through a controlled orchestration pipeline:
 
-```text 
+```text
    UI Command
       ↓
    RelayCommand
@@ -115,6 +117,7 @@ Instead, execution flows through a controlled orchestration pipeline:
 ```
 
 Guarantees:
+
 - UI thread is never blocked
 - All native calls are asynchronous-safe
 - All operations are observable via telemetry
@@ -129,15 +132,17 @@ Native exceptions do not cross the managed boundary.
 Instead, the system uses explicit return codes and structured error translation.
 
 Native Layer:
+
 - Returns integer status codes (e.g., 0 = success, non-zero = failure)
 - Avoids throwing exceptions across ABI boundary
 
 Managed Layer:
+
 - Converts status codes into exceptions or user messages
 - Logs errors via ILogger
 - Attaches telemetry via OpenTelemetry (ActivitySource)
 
-```text 
+```text
    Native C++ Failure
          ↓
    Return Error Code
@@ -156,7 +161,7 @@ Benefits:
 - No undefined runtime behavior across C++/CLI boundary
 - Improved debuggability in production environments
 
---- 
+---
 
 ## Design Principles
 
