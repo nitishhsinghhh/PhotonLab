@@ -14,6 +14,7 @@
     - [Adding a New Processing Algorithm](#adding-a-new-processing-algorithm)
     - [Dependency Rules](#dependency-rules)
 5. [Key Design Principles](#key-design-principles)
+
 ---
 
 ## High-Level Overview
